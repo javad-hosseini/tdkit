@@ -1,0 +1,15 @@
+[project]
+id = "6j4RQH2xpRPfc9j9"          # tdkit-sandbox project ID
+default_section = "Backlog"
+
+# Friendly aliases -> Todoist section IDs
+[sections]
+backlog = "6j4RQH2Vvp6p4PJ9"
+in_progress = "6j4RQH39cV3xg2Mh"
+review = "6j4RQHqC3WJjVPwh"
+done = "6j4RQHp739XXp6J9"
+
+# Map teammate shortnames -> Todoist collaborator user IDs
+[members]
+javad = "36012451"
+potato = "56754999"

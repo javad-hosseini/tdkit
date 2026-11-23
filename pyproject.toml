@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tdkit"
+version = "0.1.0"
+description = "Project-scoped Todoist API v1 SDK, CLI, and 2-tool Code Mode MCP server for AI coding agents."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "mcp>=1.2.0",
+]
+
+[project.scripts]
+tdkit = "tdkit.cli:main"
+tdkit-mcp = "tdkit.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tdkit"]
