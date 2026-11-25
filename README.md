@@ -52,12 +52,18 @@ All interfaces wrap `tdkit.client.Board`, a thin `httpx` client over the Todoist
 Each developer installs `tdkit` once on their machine using [`uv`](https://docs.astral.sh/uv/):
 
 ```bash
-# Clone and build the wheel
+# Install directly from GitHub Release tag (includes CLI `tdkit` and MCP server `tdkit-mcp`)
+uv tool install --with mcp git+https://github.com/javad-hosseini/tdkit.git@v0.1.0
+
+# Or via SSH (for private forks/access)
+uv tool install --with mcp git+ssh://git@github.com/javad-hosseini/tdkit.git@v0.1.0
+```
+
+Or build locally from source:
+```bash
 git clone git@github.com:javad-hosseini/tdkit.git
 cd tdkit
 uv build
-
-# Install globally (includes CLI `tdkit` and MCP server `tdkit-mcp`)
 uv tool install --with mcp ./dist/tdkit-0.1.0-py3-none-any.whl
 ```
 
