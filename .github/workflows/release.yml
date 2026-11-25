@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies and run tests
         run: |
           uv sync --all-extras
-          uv run pytest -v
+          uv run --with pytest pytest -v
 
       - name: Build wheel and sdist
         run: uv build
