@@ -93,11 +93,23 @@ def test_mcp_describe_api() -> None:
     assert "board.complete_task" in desc
 
 
-def test_cli_summary_and_run(capsys: pytest.CaptureFixture[str]) -> None:
+def test_cli_summary_and_run(capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
+    class FakeBoard:
+        def __enter__(self) -> "FakeBoard":
+            return self
+
+        def __exit__(self, *_: object) -> None:
+            pass
+
+        def summary(self) -> dict[str, list[dict[str, str]]]:
+            return {"backlog": [{"id": "1", "content": "Sample task"}]}
+
+    monkeypatch.setattr("tdkit.cli.Board", FakeBoard)
+
     ret = cli_main(["summary"])
     assert ret == 0
     captured = capsys.readouterr()
-    assert "{" in captured.out
+    assert "Sample task" in captured.out
 
     ret_run = cli_main(["run", "result = 1 + 1"])
     assert ret_run == 0
@@ -105,8 +117,12 @@ def test_cli_summary_and_run(capsys: pytest.CaptureFixture[str]) -> None:
     assert "2" in captured_run.out
 
 
-def test_cli_whoami(capsys: pytest.CaptureFixture[str]) -> None:
+def test_cli_whoami(capsys: pytest.CaptureFixture[str], monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        "tdkit.cli.Board.get_user_info",
+        staticmethod(lambda: {"id": "36012451", "name": "Test User", "email": "test@example.com"}),
+    )
     ret = cli_main(["whoami"])
     assert ret == 0
     captured = capsys.readouterr()
-    assert "JAVAD" in captured.out
+    assert "Test User" in captured.out
